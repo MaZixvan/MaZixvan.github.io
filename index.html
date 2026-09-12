@@ -143,7 +143,24 @@
   .detail-head .info .award{color:var(--cyan);font-size:.9rem;letter-spacing:1px;margin-top:4px;}
   .detail-close{width:44px;height:44px;border:1px solid var(--line);background:transparent;color:var(--text);font-size:1.4rem;cursor:pointer;transition:.2s;flex-shrink:0;}
   .detail-close:hover{border-color:var(--magenta);color:var(--magenta);box-shadow:0 0 14px rgba(255,46,196,.4);}
-  .detail-body{flex:1;overflow-y:auto;display:flex;align-items:center;justify-content:center;padding:24px 36px 40px;}
+  .detail-body{flex:1;overflow-y:auto;display:flex;justify-content:center;padding:24px 36px 40px;}
+  .detail-content{width:100%;max-width:1100px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+  /* 翻书画廊 */
+  .album{width:100%;margin-top:26px;}
+  .album-title{font-family:'Orbitron',sans-serif;color:var(--magenta);letter-spacing:3px;font-size:.85rem;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+  .album-title::after{content:"";flex:1;height:1px;background:var(--line);}
+  .book{position:relative;perspective:2200px;height:66vh;min-height:400px;background:#05060f;border:1px solid var(--line);}
+  .book-page{position:absolute;inset:0;transform-origin:left center;transform-style:preserve-3d;transition:transform 1s cubic-bezier(.35,.1,.25,1);backface-visibility:hidden;background:#0a0d1f;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .book-page img{max-width:100%;max-height:100%;object-fit:contain;padding:18px;user-select:none;-webkit-user-drag:none;}
+  .book-page.turned{transform:rotateY(-180deg);}
+  .book-page .page-cap{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:var(--dim);letter-spacing:2px;font-size:.85rem;}
+  .book-page::after{content:"";position:absolute;left:0;top:0;bottom:0;width:28px;background:linear-gradient(to right,rgba(0,0,0,.4),transparent);opacity:.55;}
+  .book-nav{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:18px;}
+  .book-nav button{width:46px;height:46px;border:1px solid var(--line);background:rgba(5,6,15,.6);color:var(--cyan);font-size:1.4rem;cursor:pointer;transition:.2s;}
+  .book-nav button:hover{background:var(--cyan);color:#000;box-shadow:0 0 16px var(--cyan);}
+  .book-nav button:disabled{opacity:.25;cursor:default;box-shadow:none;}
+  .book-nav button:disabled:hover{background:rgba(5,6,15,.6);color:var(--cyan);}
+  .book-num{font-family:'Orbitron',sans-serif;color:var(--dim);letter-spacing:2px;font-size:.9rem;min-width:80px;text-align:center;}
   /* 画廊（滑动轮播 + 聚焦动效） */
   .gallery{width:100%;max-width:1100px;position:relative;}
   .g-viewport{overflow:hidden;background:#000;border:1px solid var(--line);touch-action:pan-y;}
@@ -316,11 +333,75 @@ const WORKS = [
   { id:"wenwu", cat:"人工智能插画", title:"文物同人",
     cover:"人工智能插画/文物同人.jpg",
     type:"image", images:["人工智能插画/文物同人.jpg"] },
-  // ———— 人工智能视频 ————
-  { id:"xinmo", cat:"人工智能视频", title:"心魔", type:"video",
-    cover:"封面/心魔.jpg", video:"压缩视频/心魔.mp4" },
+  // ———— 人工智能视频（三个详细模块） ————
+  { id:"xinyuanjie", cat:"人工智能视频", title:"心猿劫", type:"video",
+    cover:"封面/心魔.jpg", video:"压缩视频/心魔.mp4",
+    albums:[
+      { name:"概念图", pages:[
+        {src:"人工智能视频/心猿劫/概念图/1-1.png", cap:"概念图 1-1"},
+        {src:"人工智能视频/心猿劫/概念图/1-2.png", cap:"概念图 1-2"},
+        {src:"人工智能视频/心猿劫/概念图/2-1.png", cap:"概念图 2-1"},
+        {src:"人工智能视频/心猿劫/概念图/2-2.png", cap:"概念图 2-2"},
+        {src:"人工智能视频/心猿劫/概念图/3-1.png", cap:"概念图 3-1"},
+        {src:"人工智能视频/心猿劫/概念图/3-2.png", cap:"概念图 3-2"},
+        {src:"人工智能视频/心猿劫/概念图/4-1.png", cap:"概念图 4-1"},
+        {src:"人工智能视频/心猿劫/概念图/5-1.png", cap:"概念图 5-1"},
+        {src:"人工智能视频/心猿劫/概念图/5-2.png", cap:"概念图 5-2"},
+        {src:"人工智能视频/心猿劫/概念图/6-1.png", cap:"概念图 6-1"},
+      ]}
+    ]},
   { id:"lujian", cat:"人工智能视频", title:"鹿见本心", type:"video",
-    cover:"封面/鹿见本心.jpg", video:"压缩视频/鹿见本心.mp4" },
+    cover:"封面/鹿见本心.jpg", video:"压缩视频/鹿见本心.mp4",
+    albums:[
+      { name:"三视图 · 人物设定", pages:[
+        {src:"人工智能视频/鹿见本心/人物设定图/九色鹿鹿形态1.jpeg", cap:"九色鹿"},
+        {src:"人工智能视频/鹿见本心/人物设定图/商人.jpeg", cap:"商人"},
+        {src:"人工智能视频/鹿见本心/人物设定图/士兵.jpeg", cap:"士兵"},
+        {src:"人工智能视频/鹿见本心/人物设定图/王后.jpeg", cap:"王后"},
+        {src:"人工智能视频/鹿见本心/人物设定图/舞女.jpeg", cap:"舞女"},
+      ]}
+    ]},
+  { id:"abao", cat:"人工智能视频", title:"阿宝", type:"video",
+    cover:"封面/阿宝.png", video:"压缩视频/阿宝.mp4",
+    albums:[
+      { name:"角色 · 阿宝", pages:[
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/阿宝/卧房装.png", cap:"阿宝 · 卧房装"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/阿宝/日常装1（初见）.png", cap:"阿宝 · 日常装（初见）"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/阿宝/日常装2（之后见到）.png", cap:"阿宝 · 日常装"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/阿宝/日常装3（婚后）.png", cap:"阿宝 · 日常装（婚后）"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/阿宝/日常装4（备用）.png", cap:"阿宝 · 日常装（备用）"},
+      ]},
+      { name:"角色 · 孙子楚", pages:[
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/孙子楚/寿衣装.png", cap:"孙子楚 · 寿衣装"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/孙子楚/日常装1（六根指头）.png", cap:"孙子楚 · 日常装（六指）"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/孙子楚/日常装2（正常指头）.png", cap:"孙子楚 · 日常装"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/孙子楚/日常装3（婚后）.png", cap:"孙子楚 · 日常装（婚后）"},
+      ]},
+      { name:"场景设定", pages:[
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/地府/冥府大殿.png", cap:"冥府大殿"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/地府/地府道路.png", cap:"地府道路"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/媒婆家/媒婆家.png", cap:"媒婆家"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/孙家大院/孙子楚房间.png", cap:"孙子楚房间"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/孙家大院/孙子楚房间屋檐.png", cap:"孙子楚房间屋檐"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/孙家大院/孙家书房（白天）.png", cap:"孙家书房"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/孙家大院/孙家大院堂屋（新婚版）.png", cap:"孙家大院堂屋 · 新婚"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/孙家大院/孙家大院堂屋（灵堂）.png", cap:"孙家大院堂屋 · 灵堂"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/孙家大院/孙家大院外（新婚版）.png", cap:"孙家大院外 · 新婚"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/孙家大院/孙家大院（新婚版）.png", cap:"孙家大院 · 新婚"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/荣府/宫格高清 3-3.png", cap:"荣府 · 宫格"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/荣府/荣家大院.png", cap:"荣家大院"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/荣府/荣府堂屋.png", cap:"荣府堂屋"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/荣府/荣府花园走廊.png", cap:"荣府花园走廊"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/荣府/荣府门口.png", cap:"荣府门口"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/荣府/阿宝房间.png", cap:"阿宝房间"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/荣府/阿宝房间窗外.png", cap:"阿宝房间窗外"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/街道/古城街巷(树下.png", cap:"古城街巷 · 树下"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/街道/古城街巷.png", cap:"古城街巷"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/街道/古城街巷（清明）(树下）.png", cap:"古城街巷 · 清明 · 树下"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/街道/古城街巷（清明）.png", cap:"古城街巷 · 清明"},
+        {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/街道/街巷.png", cap:"街巷"},
+      ]},
+    ]},
   // ———— 影视作品 ————
   { id:"chouzhi", cat:"影视作品", title:"抽纸", type:"video", cover:"封面/抽纸.jpg", video:"压缩视频/抽纸.mp4" },
   { id:"yuecheng", cat:"影视作品", title:"月城纸语", type:"video", cover:"封面/月城纸语.jpg", video:"压缩视频/月城纸语.mp4" },
@@ -402,7 +483,12 @@ function renderDetail() {
           <div class="bigplay"></div>
           <div class="hint">点击播放 · ${w.title}</div>
         </div>
-      </div>`;
+      </div>
+      ${w.albums ? w.albums.map((a, i) => `
+        <div class="album">
+          <div class="album-title">${a.name}</div>
+          <div class="book" id="book${i}"></div>
+        </div>`).join('') : ''}`;
   } else {
     const imgs = w.images.map(p => ASSET + p);
     const slides = imgs.map((p,i) => `<div class="g-slide${i===0?' active':''}"><img src="${enc(p)}" alt="${w.title}" /></div>`).join('');
@@ -428,7 +514,7 @@ function renderDetail() {
       </div>
       <button class="detail-close" onclick="closeDetail()">✕</button>
     </div>
-    <div class="detail-body">${body}</div>`;
+    <div class="detail-body"><div class="detail-content">${body}</div></div>`;
   if (w.type === 'video') {
     const v = document.getElementById('detailVideo');
     const poster = document.getElementById('videoPoster');
@@ -437,6 +523,7 @@ function renderDetail() {
       v.play();
       poster.style.display = 'none';
     });
+    if (w.albums) w.albums.forEach((a, i) => renderBook(document.getElementById('book' + i), a.pages));
   } else {
     bindGallery();
   }
@@ -485,6 +572,59 @@ function bindGallery() {
   };
   vp.addEventListener('pointerup', endDrag);
   vp.addEventListener('pointercancel', endDrag);
+}
+
+/* 翻书组件：单页 3D 翻页 */
+function renderBook(container, pages) {
+  if (!container || !pages || !pages.length) return;
+  let cur = 0, busy = false;
+  const els = pages.map((p, i) => {
+    const el = document.createElement('div');
+    el.className = 'book-page';
+    el.innerHTML = `<img src="${enc(ASSET + p.src)}" alt="${p.cap}"><div class="page-cap">${p.cap}</div>`;
+    el.style.zIndex = pages.length - i;
+    container.appendChild(el);
+    return el;
+  });
+  const nav = document.createElement('div');
+  nav.className = 'book-nav';
+  nav.innerHTML = `<button class="b-prev">‹</button><div class="book-num">1 / ${pages.length}</div><button class="b-next">›</button>`;
+  container.appendChild(nav);
+  const prevBtn = nav.querySelector('.b-prev');
+  const nextBtn = nav.querySelector('.b-next');
+  const num = nav.querySelector('.book-num');
+  function update() {
+    num.textContent = `${cur + 1} / ${pages.length}`;
+    prevBtn.disabled = cur === 0;
+    nextBtn.disabled = cur === pages.length - 1;
+  }
+  nextBtn.onclick = () => {
+    if (busy || cur >= pages.length - 1) return;
+    busy = true;
+    const el = els[cur];
+    el.classList.add('turned');
+    el.addEventListener('transitionend', function onEnd() {
+      el.removeEventListener('transitionend', onEnd);
+      el.style.zIndex = 0;
+      busy = false;
+    });
+    cur++;
+    update();
+  };
+  prevBtn.onclick = () => {
+    if (busy || cur <= 0) return;
+    busy = true;
+    cur--;
+    const el = els[cur];
+    el.style.zIndex = pages.length - cur;
+    el.classList.remove('turned');
+    el.addEventListener('transitionend', function onEnd() {
+      el.removeEventListener('transitionend', onEnd);
+      busy = false;
+    });
+    update();
+  };
+  update();
 }
 
 /* hash 路由 */
