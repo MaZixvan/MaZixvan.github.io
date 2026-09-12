@@ -177,14 +177,21 @@
   .g-dot.active{width:42px;background:var(--cyan);box-shadow:0 0 10px var(--cyan);}
   .g-counter{position:absolute;bottom:-10px;right:6px;font-family:'Orbitron',sans-serif;font-size:.85rem;color:var(--dim);letter-spacing:2px;}
   /* AI 视频横排展示 */
-  .ai-showcase{margin-top:44px;border:1px solid var(--line);background:rgba(10,13,31,.35);padding:22px;}
-  .ai-head{display:flex;align-items:baseline;gap:14px;margin-bottom:16px;}
-  .ai-head h3{font-family:'Orbitron',sans-serif;font-size:1.25rem;color:#fff;letter-spacing:2px;}
-  .ai-head span{color:var(--dim);letter-spacing:2px;font-size:.82rem;}
-  .ai-split{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch;}
-  .ai-video{position:relative;background:#000;aspect-ratio:16/9;overflow:hidden;}
+  .ai-showcase{margin-top:64px;position:relative;}
+  .ai-showcase::before{content:"";position:absolute;top:-32px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,240,255,.4),transparent);}
+  .ai-head{margin-bottom:20px;}
+  .ai-head h3{font-family:'Orbitron',sans-serif;font-size:1.5rem;color:#fff;letter-spacing:3px;display:inline-block;position:relative;transition:.3s;}
+  .ai-head h3:hover{color:var(--cyan);text-shadow:0 0 20px var(--cyan);}
+  .ai-split{display:grid;grid-template-columns:1fr 1.05fr;gap:34px;align-items:start;}
+  .ai-video{position:relative;background:#000;aspect-ratio:16/9;overflow:hidden;box-shadow:0 0 44px rgba(0,240,255,.13),0 12px 32px rgba(0,0,0,.5);}
   .ai-video video{width:100%;height:100%;object-fit:contain;display:block;background:#000;}
-  .ai-gallery{position:relative;background:#000;border:1px solid var(--line);overflow:hidden;}
+  .ai-video .video-poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .ai-galleries{display:flex;flex-direction:column;gap:30px;}
+  .ai-album-title{font-family:'Orbitron',sans-serif;color:var(--magenta);letter-spacing:3px;font-size:.8rem;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:12px;}
+  .ai-album-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent);}
+  .ai-album-title span{color:var(--dim);font-size:.75rem;letter-spacing:1px;}
+  .ai-gallery{position:relative;aspect-ratio:16/9;background:#000;overflow:hidden;box-shadow:0 0 30px rgba(0,240,255,.08);transition:box-shadow .35s;}
+  .ai-gallery:hover{box-shadow:0 0 48px rgba(0,240,255,.22);}
   .ai-gallery .g-viewport{position:absolute;inset:0;border:none;}
   .ai-gallery .g-slide img{max-height:100%;padding:12px;}
   .ai-gallery .g-dots{position:absolute;bottom:12px;left:0;right:0;margin:0;z-index:3;}
@@ -367,7 +374,7 @@ const WORKS = [
   { id:"lujian", cat:"人工智能视频", title:"鹿见本心", type:"video",
     cover:"封面/鹿见本心.jpg", video:"压缩视频/鹿见本心.mp4",
     albums:[
-      { name:"三视图 · 人物设定", pages:[
+      { name:"人物设定图", pages:[
         {src:"人工智能视频/鹿见本心/人物设定图/九色鹿鹿形态1.jpeg", cap:"九色鹿"},
         {src:"人工智能视频/鹿见本心/人物设定图/商人.jpeg", cap:"商人"},
         {src:"人工智能视频/鹿见本心/人物设定图/士兵.jpeg", cap:"士兵"},
@@ -378,20 +385,18 @@ const WORKS = [
   { id:"abao", cat:"人工智能视频", title:"阿宝", type:"video",
     cover:"封面/阿宝.png", video:"压缩视频/阿宝.mp4",
     albums:[
-      { name:"角色 · 阿宝", pages:[
+      { name:"人物设定图", pages:[
         {src:"人工智能视频/阿宝/其他文件/人物设定图/阿宝/卧房装.png", cap:"阿宝 · 卧房装"},
         {src:"人工智能视频/阿宝/其他文件/人物设定图/阿宝/日常装1（初见）.png", cap:"阿宝 · 日常装（初见）"},
         {src:"人工智能视频/阿宝/其他文件/人物设定图/阿宝/日常装2（之后见到）.png", cap:"阿宝 · 日常装"},
         {src:"人工智能视频/阿宝/其他文件/人物设定图/阿宝/日常装3（婚后）.png", cap:"阿宝 · 日常装（婚后）"},
         {src:"人工智能视频/阿宝/其他文件/人物设定图/阿宝/日常装4（备用）.png", cap:"阿宝 · 日常装（备用）"},
-      ]},
-      { name:"角色 · 孙子楚", pages:[
         {src:"人工智能视频/阿宝/其他文件/人物设定图/孙子楚/寿衣装.png", cap:"孙子楚 · 寿衣装"},
         {src:"人工智能视频/阿宝/其他文件/人物设定图/孙子楚/日常装1（六根指头）.png", cap:"孙子楚 · 日常装（六指）"},
         {src:"人工智能视频/阿宝/其他文件/人物设定图/孙子楚/日常装2（正常指头）.png", cap:"孙子楚 · 日常装"},
         {src:"人工智能视频/阿宝/其他文件/人物设定图/孙子楚/日常装3（婚后）.png", cap:"孙子楚 · 日常装（婚后）"},
       ]},
-      { name:"场景设定", pages:[
+      { name:"场景设定图", pages:[
         {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/地府/冥府大殿.png", cap:"冥府大殿"},
         {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/地府/地府道路.png", cap:"地府道路"},
         {src:"人工智能视频/阿宝/其他文件/人物设定图/场景/媒婆家/媒婆家.png", cap:"媒婆家"},
@@ -459,23 +464,30 @@ worksRoot.innerHTML = CATS.map(cat => {
 }).join('');
 document.querySelectorAll('.ai-showcase').forEach(el => initAIShowcase(el));
 
-/* AI 视频横排展示块：左视频 + 右图片翻页 */
+/* AI 视频横排展示块：左视频 + 右图片组翻页 */
 function renderAIShowcase(w) {
-  const imgs = (w.albums || []).flatMap(a => a.pages.map(p => p.src));
-  const slides = imgs.map((p, i) => `<div class="g-slide${i===0?' active':''}"><img src="${enc(ASSET + p)}" alt="" loading="lazy"></div>`).join('');
-  const multi = imgs.length > 1;
+  const albums = w.albums || [];
+  const galleries = albums.map(a => {
+    const slides = a.pages.map((p, i) => `<div class="g-slide${i===0?' active':''}"><img src="${enc(ASSET + p.src)}" alt="" loading="lazy"></div>`).join('');
+    const multi = a.pages.length > 1;
+    return `
+      <div class="ai-album">
+        <div class="ai-album-title">${a.name}<span>${a.pages.length}</span></div>
+        <div class="ai-gallery">
+          <div class="g-viewport"><div class="g-track">${slides}</div></div>
+          ${multi ? `<button class="g-nav prev">‹</button><button class="g-nav next">›</button><div class="g-dots">${a.pages.map((_, i) => `<span class="g-dot${i===0?' active':''}" data-i="${i}"></span>`).join('')}</div>` : ''}
+        </div>
+      </div>`;
+  }).join('');
   return `
     <div class="ai-showcase">
-      <div class="ai-head"><h3>${w.title}</h3><span>${imgs.length} 张</span></div>
+      <div class="ai-head"><h3>${w.title}</h3></div>
       <div class="ai-split">
         <div class="ai-video" data-video="${w.video}">
           <video preload="none" controls playsinline></video>
-          <div class="video-poster"><div class="bigplay"></div><div class="hint">点击播放 · ${w.title}</div></div>
+          <div class="video-poster"><img src="${enc(ASSET + w.cover)}" alt="" loading="lazy"><div class="bigplay"></div></div>
         </div>
-        <div class="ai-gallery">
-          <div class="g-viewport"><div class="g-track">${slides}</div></div>
-          ${multi ? `<button class="g-nav prev">‹</button><button class="g-nav next">›</button><div class="g-dots">${imgs.map((_, i) => `<span class="g-dot${i===0?' active':''}" data-i="${i}"></span>`).join('')}</div>` : ''}
-        </div>
+        <div class="ai-galleries">${galleries}</div>
       </div>
     </div>`;
 }
@@ -488,45 +500,47 @@ function initAIShowcase(el) {
     video.play();
     poster.style.display = 'none';
   });
-  const vp = el.querySelector('.g-viewport');
-  const track = el.querySelector('.g-track');
-  const slides = el.querySelectorAll('.g-slide');
-  if (!vp || !track || slides.length < 2) return;
-  const dots = el.querySelectorAll('.g-dot');
-  let idx = 0;
-  const n = slides.length;
-  function go(i) {
-    idx = (i % n + n) % n;
-    track.style.transform = `translateX(-${idx * 100}%)`;
-    slides.forEach((s, j) => s.classList.toggle('active', j === idx));
-    dots.forEach((d, j) => d.classList.toggle('active', j === idx));
-  }
-  el.querySelector('.g-nav.prev').onclick = () => go(idx - 1);
-  el.querySelector('.g-nav.next').onclick = () => go(idx + 1);
-  dots.forEach(d => d.onclick = () => go(+d.dataset.i));
-  let startX = 0, dragging = false, moved = 0;
-  vp.addEventListener('pointerdown', e => {
-    dragging = true; startX = e.clientX; moved = 0;
-    vp.setPointerCapture(e.pointerId);
-    track.style.transition = 'none';
-    slides.forEach(s => s.style.transition = 'none');
+  el.querySelectorAll('.ai-album').forEach(album => {
+    const vp = album.querySelector('.g-viewport');
+    const track = album.querySelector('.g-track');
+    const slides = album.querySelectorAll('.g-slide');
+    if (!vp || !track || slides.length < 2) return;
+    const dots = album.querySelectorAll('.g-dot');
+    let idx = 0;
+    const n = slides.length;
+    function go(i) {
+      idx = (i % n + n) % n;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      slides.forEach((s, j) => s.classList.toggle('active', j === idx));
+      dots.forEach((d, j) => d.classList.toggle('active', j === idx));
+    }
+    album.querySelector('.g-nav.prev').onclick = () => go(idx - 1);
+    album.querySelector('.g-nav.next').onclick = () => go(idx + 1);
+    dots.forEach(d => d.onclick = () => go(+d.dataset.i));
+    let startX = 0, dragging = false, moved = 0;
+    vp.addEventListener('pointerdown', e => {
+      dragging = true; startX = e.clientX; moved = 0;
+      vp.setPointerCapture(e.pointerId);
+      track.style.transition = 'none';
+      slides.forEach(s => s.style.transition = 'none');
+    });
+    vp.addEventListener('pointermove', e => {
+      if (!dragging) return;
+      moved = e.clientX - startX;
+      track.style.transform = `translateX(calc(${-idx * 100}% + ${moved}px))`;
+      const cur = slides[idx];
+      if (cur) cur.style.transform = `scale(${1 - Math.min(Math.abs(moved) / 900, .06)}) rotate(${moved * .02}deg)`;
+    });
+    const endDrag = () => {
+      if (!dragging) return;
+      dragging = false;
+      track.style.transition = '';
+      slides.forEach(s => { s.style.transition = ''; s.style.transform = ''; });
+      if (Math.abs(moved) > 60) go(moved < 0 ? idx + 1 : idx - 1); else go(idx);
+    };
+    vp.addEventListener('pointerup', endDrag);
+    vp.addEventListener('pointercancel', endDrag);
   });
-  vp.addEventListener('pointermove', e => {
-    if (!dragging) return;
-    moved = e.clientX - startX;
-    track.style.transform = `translateX(calc(${-idx * 100}% + ${moved}px))`;
-    const cur = slides[idx];
-    if (cur) cur.style.transform = `scale(${1 - Math.min(Math.abs(moved) / 900, .06)}) rotate(${moved * .02}deg)`;
-  });
-  const endDrag = () => {
-    if (!dragging) return;
-    dragging = false;
-    track.style.transition = '';
-    slides.forEach(s => { s.style.transition = ''; s.style.transform = ''; });
-    if (Math.abs(moved) > 60) go(moved < 0 ? idx + 1 : idx - 1); else go(idx);
-  };
-  vp.addEventListener('pointerup', endDrag);
-  vp.addEventListener('pointercancel', endDrag);
 }
 
 /* ============ 获奖情况（待补充更多） ============ */
