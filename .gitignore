@@ -1,0 +1,10 @@
+# 部署不需要的文件（原高清视频已压缩，不传）
+assets/马子轩作品集/人工智能视频/
+assets/马子轩作品集/视频作品/
+
+# 临时工具与过程文件
+.tools/
+.tmp-frames/
+compress_videos.sh
+ffmpeg.zip
+素材放置说明.md
