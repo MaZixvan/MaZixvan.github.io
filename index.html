@@ -95,11 +95,9 @@
   .work-info p{color:var(--dim);font-size:.88rem;letter-spacing:1px;}
 
   /* 获奖 */
-  .awards-timeline{position:relative;margin-top:44px;padding-left:6px;}
-  .awards-timeline::before{content:"";position:absolute;left:10px;top:8px;bottom:8px;width:2px;background:linear-gradient(to bottom,var(--cyan),var(--purple),var(--magenta));box-shadow:0 0 10px rgba(0,240,255,.5);}
-  .award-item{position:relative;padding:20px 26px 20px 50px;margin-bottom:22px;border:1px solid var(--line);background:rgba(10,13,31,.5);transition:.25s;backdrop-filter:blur(4px);}
-  .award-item::before{content:"";position:absolute;left:1px;top:50%;transform:translateY(-50%);width:18px;height:18px;border-radius:50%;background:var(--bg);border:2px solid var(--cyan);box-shadow:0 0 12px var(--cyan);}
-  .award-item:hover{border-color:var(--magenta);box-shadow:0 0 24px rgba(255,46,196,.25);transform:translateX(8px);}
+  .awards-timeline{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:44px;}
+  .award-item{position:relative;padding:22px 24px;border:1px solid var(--line);background:rgba(10,13,31,.4);transition:.25s;backdrop-filter:blur(4px);}
+  .award-item:hover{border-color:var(--cyan);box-shadow:0 0 28px rgba(0,240,255,.2);transform:translateY(-4px);}
   .award-year{font-family:'Orbitron',sans-serif;font-size:.8rem;color:var(--cyan);letter-spacing:2px;}
   .award-name{font-family:'Orbitron',sans-serif;font-size:1.12rem;color:#fff;margin:6px 0;letter-spacing:1px;}
   .award-prize{display:inline-block;margin-right:14px;color:var(--magenta);letter-spacing:2px;font-size:.95rem;text-shadow:0 0 10px rgba(255,46,196,.6);}
@@ -231,6 +229,7 @@
     .detail-body{padding:16px;}
     .works-grid.large{grid-template-columns:1fr;}
     .ai-split{grid-template-columns:1fr;}
+    .awards-timeline{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -562,6 +561,9 @@ function initAIShowcase(el) {
 /* ============ 获奖情况 + 论文发表 ============ */
 const CERT = "assets/马子轩获奖/";
 const AWARDS = [
+  { year:"2026", name:"万象东方 · 全国青年数字美学艺术创意大赛", prize:"三等奖", org:"", certs:["万象东方.jpg"] },
+  { year:"2026", name:"BICC 中英国际创意大赛", prize:"三等奖", org:"第六届", certs:["获奖7.jpg"] },
+  { year:"2026", name:"SGADC 新加坡金沙艺术设计大赛", prize:"三等奖", org:"第七届", certs:["获奖8.jpg"] },
   { year:"2026", name:"香港当代设计奖", prize:"铜奖", org:"第八届 · 共生纪", certs:["2026第八届HKCDA-共生纪·香港当代设计奖.jpg","2026第八届HKCDA-共生纪·香港当代设计奖2.jpg","2026第八届HKCDA-共生纪·香港当代设计奖3.jpg"] },
   { year:"2026", name:"日本概念艺术设计奖", prize:"铜奖", org:"第八届", certs:["2026第八届·CADA日本概念艺术设计奖.jpg"] },
   { year:"2026", name:"米兰设计周", prize:"三等奖", org:"第十届 · 非命题", certs:["第十届米兰设计周非命题.png"] },
