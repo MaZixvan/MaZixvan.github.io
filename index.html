@@ -137,12 +137,17 @@
   .popup-close{position:absolute;top:-18px;right:-14px;width:44px;height:44px;border:1px solid var(--line);background:rgba(5,6,15,.9);color:var(--text);font-size:1.4rem;cursor:pointer;transition:.2s;z-index:5;}
   .popup-close:hover{border-color:var(--magenta);color:var(--magenta);box-shadow:0 0 14px rgba(255,46,196,.4);}
   .popup-body{max-height:84vh;overflow-y:auto;}
-  .p-video{background:#000;}
-  .p-video video{width:100%;max-height:72vh;display:block;background:#000;}
-  .p-video + .p-video{margin-top:16px;}
   .p-gallery{position:relative;background:#000;}
   .p-gallery .g-viewport{overflow:hidden;}
-  .p-gallery .g-slide img{max-height:76vh;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none;pointer-events:none;}
+  .p-gallery .g-slide{height:72vh;}
+  .p-gallery .g-slide img{max-width:100%;max-height:100%;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none;pointer-events:none;}
+  .p-video{position:relative;width:100%;height:100%;background:#000;display:flex;align-items:center;justify-content:center;}
+  .p-video video{width:100%;height:100%;object-fit:contain;display:block;background:#000;}
+  .p-video .video-poster{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a0f2a,#1a1040);cursor:pointer;z-index:2;}
+  .p-video .video-poster .bigplay{width:80px;height:80px;border:2px solid var(--cyan);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 30px rgba(0,240,255,.6);transition:.25s;}
+  .p-video .video-poster .bigplay::after{content:"";border-left:24px solid var(--cyan);border-top:15px solid transparent;border-bottom:15px solid transparent;margin-left:5px;}
+  .p-video .video-poster:hover .bigplay{transform:scale(1.1);border-color:var(--magenta);box-shadow:0 0 34px rgba(255,46,196,.6);}
+  .p-video .video-poster:hover .bigplay::after{border-left-color:var(--magenta);}
   .p-gallery .g-nav{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border:1px solid var(--line);background:rgba(5,6,15,.65);color:var(--cyan);font-size:1.3rem;cursor:pointer;transition:.2s;z-index:3;}
   .p-gallery .g-nav:hover{background:var(--cyan);color:#000;box-shadow:0 0 16px var(--cyan);}
   .p-gallery .g-nav.prev{left:12px;}
@@ -665,22 +670,30 @@ document.querySelectorAll('.p-btn').forEach(b => b.addEventListener('click', () 
 const popup = document.getElementById('popup');
 function openPractice(i) {
   const p = PRACTICES[i];
-  const imgs = p.media.filter(m => m.t === 'image');
-  const vids = p.media.filter(m => m.t === 'video');
-  let html = '';
-  if (imgs.length) {
-    const slides = imgs.map((m, si) => `<div class="g-slide${si===0?' active':''}"><img src="${enc(PRAC + m.src)}" alt=""></div>`).join('');
-    const multi = imgs.length > 1;
-    html = `<div class="p-gallery">
-      <div class="g-viewport"><div class="g-track">${slides}</div></div>
-      ${multi ? `<button class="g-nav prev" onclick="pNav(-1)">‹</button><button class="g-nav next" onclick="pNav(1)">›</button><div class="g-dots">${imgs.map((_,si)=>`<span class="g-dot${si===0?' active':''}" data-i="${si}" onclick="pGo(${si})"></span>`).join('')}</div>` : ''}
-    </div>`;
-  } else {
-    html = vids.map(m => `<div class="p-video"><video src="${enc(PRAC + m.src)}" controls preload="none"></video></div>`).join('');
-  }
+  const media = p.media;
+  const slides = media.map((m, si) => {
+    if (m.t === 'video') {
+      return `<div class="g-slide${si===0?' active':''}"><div class="p-video" data-video="${m.src}"><video preload="none" controls playsinline></video><div class="video-poster"><div class="bigplay"></div></div></div></div>`;
+    }
+    return `<div class="g-slide${si===0?' active':''}"><img src="${enc(PRAC + m.src)}" alt=""></div>`;
+  }).join('');
+  const multi = media.length > 1;
+  const html = `<div class="p-gallery">
+    <div class="g-viewport"><div class="g-track">${slides}</div></div>
+    ${multi ? `<button class="g-nav prev" onclick="pNav(-1)">‹</button><button class="g-nav next" onclick="pNav(1)">›</button><div class="g-dots">${media.map((_,si)=>`<span class="g-dot${si===0?' active':''}" data-i="${si}" onclick="pGo(${si})"></span>`).join('')}</div>` : ''}
+  </div>`;
   document.getElementById('popupBody').innerHTML = html;
   popup.classList.add('open');
   document.body.style.overflow = 'hidden';
+  document.querySelectorAll('#popup .p-video').forEach(v => {
+    const video = v.querySelector('video');
+    const poster = v.querySelector('.video-poster');
+    poster.addEventListener('click', () => {
+      video.src = enc(PRAC + v.dataset.video);
+      video.play();
+      poster.style.display = 'none';
+    });
+  });
 }
 function closePopup() {
   popup.classList.remove('open');
@@ -696,6 +709,7 @@ window.pGo = function(i) {
   track.style.transform = `translateX(-${idx * 100}%)`;
   slides.forEach((s, j) => s.classList.toggle('active', j === idx));
   dots.forEach((d, j) => d.classList.toggle('active', j === idx));
+  popup.querySelectorAll('video').forEach(v => v.pause());
 };
 window.pNav = function(d) {
   const slides = popup.querySelectorAll('.g-slide');
