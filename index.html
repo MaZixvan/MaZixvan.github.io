@@ -798,22 +798,22 @@ window.goImg = function(i) {
   if (!curWork) return;
   const n = curWork.images.length;
   curIdx = (i % n + n) % n;
-  const track = document.getElementById('gTrack');
+  const track = detail.querySelector('.g-track');
   if (track) track.style.transform = `translateX(-${curIdx * 100}%)`;
-  document.querySelectorAll('.g-slide').forEach((s, j) => s.classList.toggle('active', j === curIdx));
-  document.querySelectorAll('.g-dot').forEach((d, j) => d.classList.toggle('active', j === curIdx));
-  const counter = document.querySelector('.g-counter');
+  detail.querySelectorAll('.g-slide').forEach((s, j) => s.classList.toggle('active', j === curIdx));
+  detail.querySelectorAll('.g-dot').forEach((d, j) => d.classList.toggle('active', j === curIdx));
+  const counter = detail.querySelector('.g-counter');
   if (counter) counter.textContent = `${curIdx + 1} / ${n}`;
 };
 function bindGallery() {
-  const vp = document.getElementById('gViewport');
+  const vp = detail.querySelector('.g-viewport');
   if (!vp || !curWork || curWork.images.length < 2) return;
-  const track = document.getElementById('gTrack');
-  document.getElementById('gPrev').onclick = () => navImg(-1);
-  document.getElementById('gNext').onclick = () => navImg(1);
-  document.querySelectorAll('.g-dot').forEach(d => d.onclick = () => goImg(+d.dataset.i));
+  const track = detail.querySelector('.g-track');
+  detail.querySelector('.g-nav.prev').onclick = () => navImg(-1);
+  detail.querySelector('.g-nav.next').onclick = () => navImg(1);
+  detail.querySelectorAll('.g-dot').forEach(d => d.onclick = () => goImg(+d.dataset.i));
   // 拖拽 / 滑动切换（带倾斜视差）
-  const slides = document.querySelectorAll('.g-slide');
+  const slides = detail.querySelectorAll('.g-slide');
   let startX = 0, dragging = false, moved = 0;
   vp.addEventListener('pointerdown', e => {
     dragging = true; startX = e.clientX; moved = 0;
