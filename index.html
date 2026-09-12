@@ -562,21 +562,22 @@ function initAIShowcase(el) {
 /* ============ 获奖情况 + 论文发表 ============ */
 const CERT = "assets/马子轩获奖/";
 const AWARDS = [
-  { year:"2026", name:"香港当代设计奖", org:"第八届 · 共生纪", certs:["2026第八届HKCDA-共生纪·香港当代设计奖.jpg","2026第八届HKCDA-共生纪·香港当代设计奖2.jpg","2026第八届HKCDA-共生纪·香港当代设计奖3.jpg"] },
-  { year:"2026", name:"日本概念艺术设计奖", org:"第八届", certs:["2026第八届·CADA日本概念艺术设计奖.jpg"] },
-  { year:"2026", name:"米兰设计周", org:"第十届 · 非命题", certs:["第十届米兰设计周非命题.png"] },
-  { year:"2026", name:"安徒生国际艺术奖", org:"", certs:["安徒生.jpg"] },
-  { year:"2026", name:"永创杯", org:"", certs:["永创杯.jpg"] },
-  { year:"2025", name:"AADC 北美应用艺术设计大赛", org:"第二届", works:"获奖作品：《深海魅域》《鸦翼神谕》", certs:["2025第二届AADC北美应用艺术设计奖.jpg","2025第二届AADC北美应用艺术设计奖2.jpg"] },
+  { year:"2026", name:"香港当代设计奖", prize:"铜奖", org:"第八届 · 共生纪", certs:["2026第八届HKCDA-共生纪·香港当代设计奖.jpg","2026第八届HKCDA-共生纪·香港当代设计奖2.jpg","2026第八届HKCDA-共生纪·香港当代设计奖3.jpg"] },
+  { year:"2026", name:"日本概念艺术设计奖", prize:"铜奖", org:"第八届", certs:["2026第八届·CADA日本概念艺术设计奖.jpg"] },
+  { year:"2026", name:"米兰设计周", prize:"三等奖", org:"第十届 · 非命题", certs:["第十届米兰设计周非命题.png"] },
+  { year:"2026", name:"安徒生国际艺术奖", prize:"金奖", org:"", certs:["安徒生.jpg"] },
+  { year:"2026", name:"永创杯", prize:"二等奖", org:"", certs:["永创杯.jpg"] },
+  { year:"2025", name:"AADC 北美应用艺术设计大赛", prize:"铜奖", org:"第二届", works:"获奖作品：《深海魅域》《鸦翼神谕》", certs:["2025第二届AADC北美应用艺术设计奖.jpg","2025第二届AADC北美应用艺术设计奖2.jpg"] },
 ];
 const PUBLICATIONS = [
   { journal:"艺术交流", issue:"2026年第7期", title:"可触摸的像素：媒介考古视域下拼豆艺术的复兴与物质性转向" },
-  { journal:"文学天地", issue:"2026年6期", title:"被补全的记忆：推测设计视角下AI家庭老照片“生成行修复”的真实性边界研究" },
+  { journal:"文学天地", issue:"2026年6期", title:"被补全的记忆：推测设计视角下AI家庭老照片“生成式修复”的真实性边界研究" },
 ];
 document.getElementById('awardsTimeline').innerHTML = AWARDS.map(a => `
   <div class="award-item">
     <span class="award-year">${a.year}</span>
     <h3 class="award-name">${a.name}</h3>
+    ${a.prize ? `<span class="award-prize">${a.prize}</span>` : ''}
     <span class="award-org">${a.org}</span>
     ${a.works ? `<span class="award-works">${a.works}</span>` : ''}
     ${a.certs ? `<div class="award-certs">${a.certs.map(c => `<img src="${enc(CERT + c)}" alt="${a.name}" loading="lazy" onclick="showCert('${enc(CERT + c)}')">`).join('')}</div>` : ''}
