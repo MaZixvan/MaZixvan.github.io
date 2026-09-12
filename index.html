@@ -105,6 +105,21 @@
   .award-prize{display:inline-block;margin-right:14px;color:var(--magenta);letter-spacing:2px;font-size:.95rem;text-shadow:0 0 10px rgba(255,46,196,.6);}
   .award-org{color:var(--dim);letter-spacing:1px;font-size:.9rem;}
   .award-works{display:block;margin-top:6px;color:var(--text);font-size:.92rem;letter-spacing:1px;}
+  .award-certs{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
+  .award-certs img{height:90px;border:1px solid var(--line);cursor:pointer;transition:.25s;object-fit:cover;border-radius:2px;}
+  .award-certs img:hover{border-color:var(--cyan);box-shadow:0 0 16px rgba(0,240,255,.4);transform:translateY(-3px);}
+  .pub-section{margin-top:60px;}
+  .pub-head{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+  .pub-head .bar{width:4px;height:26px;background:linear-gradient(var(--cyan),var(--magenta));box-shadow:0 0 10px var(--cyan);}
+  .pub-head h3{font-family:'Orbitron',sans-serif;font-size:1.15rem;letter-spacing:3px;color:#fff;}
+  .pub-item{padding:20px 24px;border-left:2px solid var(--magenta);margin-bottom:18px;background:rgba(10,13,31,.35);transition:.25s;}
+  .pub-item:hover{border-left-color:var(--cyan);box-shadow:0 0 20px rgba(0,240,255,.15);transform:translateX(6px);}
+  .pub-journal{color:var(--magenta);font-family:'Orbitron',sans-serif;font-size:.9rem;letter-spacing:2px;margin-bottom:8px;}
+  .pub-title{color:var(--text);font-size:1.05rem;line-height:1.65;letter-spacing:.5px;}
+  .cert-lightbox{position:fixed;inset:0;z-index:60;background:rgba(4,5,13,.95);display:flex;align-items:center;justify-content:center;cursor:zoom-out;}
+  .cert-lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;box-shadow:0 0 60px rgba(0,240,255,.3);}
+  .cert-close{position:absolute;top:20px;right:24px;width:44px;height:44px;border:1px solid var(--line);background:transparent;color:var(--text);font-size:1.4rem;cursor:pointer;}
+  .cert-close:hover{border-color:var(--magenta);color:var(--magenta);box-shadow:0 0 14px rgba(255,46,196,.4);}
 
   /* 关于 */
   .about-wrap{display:grid;grid-template-columns:1.15fr 1fr;gap:50px;align-items:start;margin-top:30px;}
@@ -263,9 +278,10 @@
   </section>
 
   <section id="awards">
-    <span class="sec-tag">// Awards</span>
+    <span class="sec-tag">// Awards & Publications</span>
     <h2>获奖<span class="accent">情况</span></h2>
     <div class="awards-timeline" id="awardsTimeline"></div>
+    <div class="pub-section" id="pubSection"></div>
   </section>
 
   <section id="about">
@@ -543,18 +559,42 @@ function initAIShowcase(el) {
   });
 }
 
-/* ============ 获奖情况（待补充更多） ============ */
+/* ============ 获奖情况 + 论文发表 ============ */
+const CERT = "assets/马子轩获奖/";
 const AWARDS = [
-  { year:"2025", name:"AADC 北美应用艺术设计大赛", prize:"获奖", org:"第二届", works:"获奖作品：《深海魅域》《鸦翼神谕》" },
+  { year:"2026", name:"香港当代设计奖", org:"第八届 · 共生纪", certs:["2026第八届HKCDA-共生纪·香港当代设计奖.jpg","2026第八届HKCDA-共生纪·香港当代设计奖2.jpg","2026第八届HKCDA-共生纪·香港当代设计奖3.jpg"] },
+  { year:"2026", name:"日本概念艺术设计奖", org:"第八届", certs:["2026第八届·CADA日本概念艺术设计奖.jpg"] },
+  { year:"2026", name:"米兰设计周", org:"第十届 · 非命题", certs:["第十届米兰设计周非命题.png"] },
+  { year:"2026", name:"安徒生国际艺术奖", org:"", certs:["安徒生.jpg"] },
+  { year:"2026", name:"永创杯", org:"", certs:["永创杯.jpg"] },
+  { year:"2025", name:"AADC 北美应用艺术设计大赛", org:"第二届", works:"获奖作品：《深海魅域》《鸦翼神谕》", certs:["2025第二届AADC北美应用艺术设计奖.jpg","2025第二届AADC北美应用艺术设计奖2.jpg"] },
+];
+const PUBLICATIONS = [
+  { journal:"艺术交流", issue:"2026年第7期", title:"可触摸的像素：媒介考古视域下拼豆艺术的复兴与物质性转向" },
+  { journal:"文学天地", issue:"2026年6期", title:"被补全的记忆：推测设计视角下AI家庭老照片“生成行修复”的真实性边界研究" },
 ];
 document.getElementById('awardsTimeline').innerHTML = AWARDS.map(a => `
   <div class="award-item">
     <span class="award-year">${a.year}</span>
     <h3 class="award-name">${a.name}</h3>
-    <span class="award-prize">${a.prize}</span>
     <span class="award-org">${a.org}</span>
-    <span class="award-works">${a.works}</span>
+    ${a.works ? `<span class="award-works">${a.works}</span>` : ''}
+    ${a.certs ? `<div class="award-certs">${a.certs.map(c => `<img src="${enc(CERT + c)}" alt="${a.name}" loading="lazy" onclick="showCert('${enc(CERT + c)}')">`).join('')}</div>` : ''}
   </div>`).join('');
+document.getElementById('pubSection').innerHTML = `
+  <div class="pub-head"><div class="bar"></div><h3>论文发表</h3></div>
+  ${PUBLICATIONS.map(p => `
+    <div class="pub-item">
+      <div class="pub-journal">《${p.journal}》 · ${p.issue}</div>
+      <div class="pub-title">${p.title}</div>
+    </div>`).join('')}`;
+function showCert(src) {
+  const overlay = document.createElement('div');
+  overlay.className = 'cert-lightbox';
+  overlay.innerHTML = `<img src="${src}" alt=""><button class="cert-close">✕</button>`;
+  overlay.addEventListener('click', e => { if (e.target === overlay || e.target.classList.contains('cert-close')) overlay.remove(); });
+  document.body.appendChild(overlay);
+}
 
 /* ============ 详情页（每个作品一篇） ============ */
 const detail = document.getElementById('detail');
